@@ -14,9 +14,6 @@ class ViewController: UIViewController {
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView()
         collectionView.backgroundColor = .none
-        collectionView.register(StoriesCollectionViewCell.self, forCellWithReuseIdentifier: StoriesCollectionViewCell.identifier)
-        collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
-        collectionView.register(ComingSoonCollectionViewCell.self, forCellWithReuseIdentifier: ComingSoonCollectionViewCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -40,11 +37,19 @@ class ViewController: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(orderButton)
        
+        collectionRegister()
+        setConstraits()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        setConstraits()
-        
+    }
+    
+    private func collectionRegister(){
+        collectionView.register(StoriesCollectionViewCell.self, forCellWithReuseIdentifier: StoriesCollectionViewCell.identifier)
+        collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
+        collectionView.register(ComingSoonCollectionViewCell.self, forCellWithReuseIdentifier: ComingSoonCollectionViewCell.identifier)
+        collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderSupplementaryView.identifier)
     }
     
 
@@ -100,6 +105,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             cell.configureCell(imageName: example[indexPath.row].image)
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                         withReuseIdentifier: HeaderSupplementaryView.identifier,
+                                                                         for: indexPath) as! HeaderSupplementaryView
+            header.configureHeader(categoryName: sections[indexPath.row].title)
+            return header
+        default:
+            return UICollectionReusableView()
         }
     }
 }
