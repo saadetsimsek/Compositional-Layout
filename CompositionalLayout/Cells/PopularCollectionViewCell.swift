@@ -36,7 +36,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
         label.text = "Category"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -68,10 +68,10 @@ class PopularCollectionViewCell: UICollectionViewCell {
             categoryLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             categoryLabel.heightAnchor.constraint(equalToConstant: 16),
             
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            imageView.bottomAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5)
+            imageView.bottomAnchor.constraint(equalTo: categoryLabel.bottomAnchor)
         ])
     }
     
